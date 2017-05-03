@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+require 'optparse'
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: memcached_client.sample [options]'
+
+  opts.on('-p', '--port port', 'Port') do |v|
+    options[:port] = v
+  end
+end.parse!
+
+options[:port] ||= 2000
+
+begin
+  s = TCPSocket.open('localhost', options[:port])
+  loop do
+    puts 'Enter command:'
+    command = gets.chomp
+    command += "\r\n#{gets.chomp}" if %w(set add replace append prepend cas).include?(command.split.first)
+    s.write command
+    puts s.recv(1024)
+  end
+  s.close
+rescue SystemCallError => e
+  raise "Can't connect to tcp server on port #{options[:port]}: #{e}"
+end

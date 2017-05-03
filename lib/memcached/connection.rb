@@ -41,7 +41,7 @@ class Connection
   # Params:
   # +params+:: parameters of the request
   def save_fetched_keys(params)
-    if Command::RETRIEVAL_COMMANDS.include?(params[:command])
+    if Commands::RETRIEVAL_COMMANDS.include?(params[:command])
       params[:keys].each { |key| fetched_records_time[key.to_sym] = Time.now }
     end
   end
