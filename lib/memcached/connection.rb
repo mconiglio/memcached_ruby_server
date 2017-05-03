@@ -1,5 +1,5 @@
 require File.expand_path('../request_parser', __FILE__)
-require File.expand_path('../command', __FILE__)
+require File.expand_path('../commands', __FILE__)
 
 # This class accepts and responds the incoming requests of
 # the clients and stores the timestamp of each get/gets

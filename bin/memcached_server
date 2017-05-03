@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require File.expand_path('../../lib/memcached/memcached_server', __FILE__)
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: memcached_server [options]'
+
+  opts.on('-p', '--port port', 'Port') do |v|
+    options[:port] = v
+  end
+end.parse!
+
+options[:port] ||= 2000
+s = MemcachedServer.new(options[:port])
+s.start
